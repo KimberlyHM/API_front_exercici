@@ -1,5 +1,5 @@
 from typing import Union
-
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException
 import db_alumnes
 import alumnes
@@ -9,6 +9,15 @@ from typing import List
 from pydantic import BaseModel
 
 app = FastAPI()   #crea una instancia de api
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 class alumne(BaseModel):    #para convertir las respuesta a json
     IdAlumne:int
@@ -23,11 +32,18 @@ class alumne(BaseModel):    #para convertir las respuesta a json
 
 class Aula(BaseModel):
     IdAULA: int
-    DescAula: int
+    DescAula: str
     Edifici: str
-    Pis: int
+    Pis: str
     CreatedAt: int
     UpdateAt: int
+
+class tablaAlumne(BaseModel):
+    NomAlumne: str
+    Cicle: str
+    Curs: str
+    Grup: str
+    DescAula: str  
 
    
 
@@ -36,7 +52,8 @@ def read_root():
     return {"Alumnat API"}
     
 
-@app.get("/alumnes/list", response_model=List[dict])
+#@app.get("/alumnes/list", response_model=List[dict])
+@app.get("/alumnes/list", response_model=List[tablaAlumne]) 
 def read_pelis():
     pdb= db_alumnes.read()
     alumnos_sch = alumnes.alumnes_schema(pdb)

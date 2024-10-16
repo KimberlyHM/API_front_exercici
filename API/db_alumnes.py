@@ -4,7 +4,19 @@ def read():
     try:
         conn = db_client()
         cur = conn.cursor()
-        cur.execute("select * from alumne")
+        cur.execute("""
+            SELECT 
+                alumne.IdAula,
+                alumne.NomAlumne,
+                alumne.Cicle,
+                alumne.Curs,
+                alumne.Grup,
+                aula.DescAula
+            FROM 
+                alumne
+            JOIN 
+                aula ON alumne.IdAula = aula.IdAULA
+        """)
     
         films = cur.fetchall()
     
@@ -15,6 +27,7 @@ def read():
         conn.close()
     
     return films
+
 
 def read_id(id):
     try:

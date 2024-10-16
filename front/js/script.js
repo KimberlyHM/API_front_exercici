@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     // Cridem a l'endpoint de l'API fent un fetch
-    ______________________________________________
+    fetch("http://127.0.0.1:8000/alumnes/list")
         .then(response => {
             if (!response.ok) {
                 throw new Error("Error a la resposta del servidor");
@@ -21,6 +21,25 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 // Repetir per tots els altres camps restants que retorna l'endpoint
                 _____________________________________________
+                // Crear la cel·la per al cicle
+                const cicleCell = document.createElement("td");
+                cicleCell.textContent = alumne.Cicle;
+                row.appendChild(cicleCell);
+
+                // Crear la cel·la per al curs
+                const cursCell = document.createElement("td");
+                cursCell.textContent = alumne.Curs;
+                row.appendChild(cursCell);
+
+                // Crear la cel·la per al grup
+                const grupCell = document.createElement("td");
+                grupCell.textContent = alumne.Grup;
+                row.appendChild(grupCell);
+
+                // Crear la cel·la per a l'aula (DescAula)
+                const aulaCell = document.createElement("td");
+                aulaCell.textContent = alumne.DescAula;
+                row.appendChild(aulaCell);
 
                 
 
@@ -32,3 +51,5 @@ document.addEventListener("DOMContentLoaded", function() {
             alert("Error al carregar la llista d'alumnes");
         });
 });
+
+
