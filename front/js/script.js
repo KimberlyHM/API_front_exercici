@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function() {
     // Cridem a l'endpoint de l'API fent un fetch
     fetch("http://127.0.0.1:8000/alumnes/list")
@@ -15,12 +16,11 @@ document.addEventListener("DOMContentLoaded", function() {
             data.forEach(alumne => {
                 const row = document.createElement("tr");
 
+                // Crear la cel·la per al nom de l'alumne
                 const nomAluCell = document.createElement("td");
                 nomAluCell.textContent = alumne.NomAlumne;
                 row.appendChild(nomAluCell);
 
-                // Repetir per tots els altres camps restants que retorna l'endpoint
-                _____________________________________________
                 // Crear la cel·la per al cicle
                 const cicleCell = document.createElement("td");
                 cicleCell.textContent = alumne.Cicle;
@@ -41,8 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 aulaCell.textContent = alumne.DescAula;
                 row.appendChild(aulaCell);
 
-                
-
+                // Añadir la fila completa a la tabla
                 alumnesTableBody.appendChild(row);
             });
         })
