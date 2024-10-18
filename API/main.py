@@ -54,13 +54,13 @@ def read_root():
 
 #@app.get("/alumnes/list", response_model=List[dict])
 @app.get("/alumnes/list", response_model=List[tablaAlumne]) 
-def read_pelis():
+def read_alumnes():
     pdb= db_alumnes.read()
     alumnos_sch = alumnes.alumnes_schema(pdb)
     return alumnos_sch
 
 @app.get("/alumne/show/{id}", response_model=alumne)
-def read_pelis_id(id:int):
+def read_alumnes_id(id:int):
     if db_alumnes.read_id(id) is not None:
         alumno = alumnes.alumne_schema(db_alumnes.read_id(id))
     else:

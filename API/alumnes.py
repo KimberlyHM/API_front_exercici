@@ -5,7 +5,7 @@ def alumne_schema(fetchAlumnes):
         "Cicle": str(fetchAlumnes[1]),
         "Curs": str(fetchAlumnes[2]),
         "Grup": str(fetchAlumnes[3]),
-        "DescAula": str(fetchAlumnes[4])  # Asegúrate de que esto sea un string
+        "DescAula": str(fetchAlumnes[4])  #
     }
  
             
