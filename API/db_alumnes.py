@@ -47,3 +47,36 @@ def read_id(id):
         conn.close()
     
     return alumno
+
+
+def create_alumne(IdAula, NomAlumne, Cicle, Curs, Grup):
+    conn = db_client()
+    cur = conn.cursor()
+    
+    query = """
+    INSERT INTO alumne (IdAula, NomAlumne, Cicle, Curs, Grup)
+    VALUES (%s, %s, %s, %s, %s)
+    """
+    cur.execute(query, (IdAula, NomAlumne, Cicle, Curs, Grup))
+    conn.commit()
+
+    cur.execute("SELECT LAST_INSERT_ID();")
+    IdAlumne = cur.fetchone()[0]
+
+    cur.execute("SELECT * FROM alumne WHERE IdAlumne = %s", (IdAlumne,))
+    new_alumne = cur.fetchone()
+
+    conn.close()
+    return new_alumne
+
+def read_aula_by_id(id):
+    conn = db_client()
+    cur = conn.cursor()
+
+    query = "SELECT * FROM aula WHERE IdAula = %s"
+    cur.execute(query, (id,))
+    aula = cur.fetchone()
+
+    conn.close()
+    return aula
+

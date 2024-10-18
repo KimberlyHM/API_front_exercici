@@ -19,7 +19,7 @@ app.add_middleware(
 )
 
 
-class alumne(BaseModel):    #para convertir las respuesta a json
+class Alumne(BaseModel):    #para convertir las respuesta a json
     IdAlumne:int
     IdAula: int
     NomAlumne: str
@@ -59,7 +59,7 @@ def read_alumnes():
     alumnos_sch = alumnes.alumnes_schema(pdb)
     return alumnos_sch
 
-@app.get("/alumne/show/{id}", response_model=alumne)
+@app.get("/alumne/show/{id}", response_model=Alumne)
 def read_alumnes_id(id:int):
     if db_alumnes.read_id(id) is not None:
         alumno = alumnes.alumne_schema(db_alumnes.read_id(id))
@@ -67,15 +67,21 @@ def read_alumnes_id(id:int):
         raise HTTPException(status_code=404, detail="Item not found")
     return alumno
 
-#@app.post("/create_peli")
-#async def create_film(data: film):
-    titol = data.titulo
-    any = data.fecha
-    puntuacio = data.puntuacion
-    vots = data.votos
-    l_film_id = db_pelis.create(titol,any,puntuacio,vots)
-    return {
-        "msg": "we got data succesfully",
-        "id film": l_film_id,
-        "titol": titol
-    }
+@app.post("/alumnat/add")
+def add_alumne(alumne: Alumne):
+    
+    aula = db_alumnes.read_aula_by_id(alumne.IdAula)
+    
+    if aula is None:
+        raise HTTPException(status_code=404, detail="No s'ha trobat l'aula")
+
+    
+    new_alumne = db_alumnes.create_alumne(
+        alumne.IdAula, 
+        alumne.NomAlumne, 
+        alumne.Cicle, 
+        alumne.Curs, 
+        alumne.Grup
+    )
+
+    return {"message": "S'ha afegit correctament", "alumne": new_alumne}
