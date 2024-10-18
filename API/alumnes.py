@@ -1,11 +1,11 @@
 def alumne_schema(fetchAlumnes):
     return {
         
-        "NomAlumne": str(fetchAlumnes[0]),  # Asegúrate de que esto sea un string
-        "Cicle": str(fetchAlumnes[1]),
-        "Curs": str(fetchAlumnes[2]),
-        "Grup": str(fetchAlumnes[3]),
-        "DescAula": str(fetchAlumnes[4])  #
+        "NomAlumne": str(fetchAlumnes[1]),  # Asegúrate de que esto sea un string
+        "Cicle": str(fetchAlumnes[2]),
+        "Curs": str(fetchAlumnes[3]),
+        "Grup": str(fetchAlumnes[4]),
+        "DescAula": str(fetchAlumnes[5])  #
     }
  
             
