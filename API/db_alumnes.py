@@ -6,7 +6,6 @@ def read():
         cur = conn.cursor()
         cur.execute("""
             SELECT 
-                alumne.IdAula,
                 alumne.NomAlumne,
                 alumne.Cicle,
                 alumne.Curs,
