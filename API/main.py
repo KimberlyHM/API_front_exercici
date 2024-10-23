@@ -85,3 +85,32 @@ def add_alumne(alumne: Alumne):
     )
 
     return {"message": "S'ha afegit correctament", "alumne": new_alumne}
+
+@app.put("/update_alumne/{IdAlumne}")
+def update_alumne(IdAlumne:int,curs:int):
+    updated_records = db_alumnes.update_alumne(IdAlumne,curs)
+    if updated_records == 0:
+       raise HTTPException(status_code=404, detail="Items to update not found")
+    
+    alumne = db_alumnes.read_id(IdAlumne)
+    if not alumne:
+        raise HTTPException(status_code=404, detail="Estudiant no trobat")
+
+    return "S'ha modificat correctament",alumnes.alumne_schema(alumne)
+    
+@app.delete("/delete_alumne/{IdAlumne}")
+def delete_alumne(IdAlumne:int):
+    deleted_records = db_alumnes.delete_alumne(IdAlumne)
+    if deleted_records == 0:
+       raise HTTPException(status_code=404, detail="Items to delete not found")
+    return "S'ha esborrat correctament"
+
+@app.get("/alumne/listAll/{IdAlumne}")
+def get_all_alumnes(IdAlumne: int):
+    try:
+        alumnes = db_alumnes.list_all_alumnes(IdAlumne)
+        if not alumnes:
+            raise HTTPException(status_code=404, detail="No alumnes found")
+        return alumnes
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching alumnes: {e}")

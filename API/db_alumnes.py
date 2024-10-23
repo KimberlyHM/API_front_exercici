@@ -80,3 +80,62 @@ def read_aula_by_id(id):
     conn.close()
     return aula
 
+def update_alumne(idAlumne,curs):
+    try:
+        conn = db_client()
+        cur = conn.cursor()
+        query = "update alumne SET curs = %s WHERE idAlumne = %s;"
+        values=(curs,idAlumne)
+        cur.execute(query,values)
+        updated_recs = cur.rowcount
+    
+        conn.commit()
+    
+    except Exception as e:
+        return {"status": -1, "message": f"Error de connexió:{e}" }
+    
+    finally:
+        conn.close()
+
+    return updated_recs
+
+
+def delete_alumne(id):
+    try:
+        conn = db_client()
+        cur = conn.cursor()
+        query = "DELETE FROM alumne WHERE idAlumne = %s;"
+        cur.execute(query,(id,))
+        deleted_recs = cur.rowcount
+        conn.commit()
+    
+    except Exception as e:
+        return {"status": -1, "message": f"Error de connexió:{e}" }
+    
+    finally:
+        conn.close()
+        
+    return deleted_recs
+
+def list_all_alumnes(idAlumne: int):
+    try:
+        conn = db_client()  
+        cur = conn.cursor()
+
+        query = """
+            SELECT alumne.IdAlumne, alumne.NomAlumne, alumne.Cicle, alumne.Curs, alumne.Grup,
+                   aula.DescAula, aula.Edifici, aula.Pis
+            FROM alumne
+            JOIN aula ON alumne.IdAula = aula.IdAula
+            WHERE alumne.IdAlumne = %s;
+        """
+        cur.execute(query, (idAlumne,))  
+        alumnes = cur.fetchall()
+
+        return alumnes
+
+    except Exception as e:
+        raise Exception(f"Error retrieving data: {e}")
+
+    finally:
+        conn.close()
